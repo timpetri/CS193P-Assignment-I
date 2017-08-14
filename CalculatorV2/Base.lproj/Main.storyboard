@@ -54,13 +54,13 @@
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="IX3-c9-lCG">
                                         <rect key="frame" x="49" y="0.0" width="48" height="48"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <color key="backgroundColor" red="1" green="0.94128109179999997" blue="0.00037984644719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="sin">
+                                        <state key="normal" title="BC">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="0bm-a5-7iZ"/>
+                                            <action selector="backSpace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="5y7-Dk-MDA"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="2" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v6O-pX-fzg">
@@ -88,11 +88,11 @@
                                 </subviews>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" fixedFrame="YES" distribution="fillEqually" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="Wzn-JL-ITu">
-                                <rect key="frame" x="0.0" y="131" width="216" height="48"/>
+                                <rect key="frame" x="0.0" y="131" width="286" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <subviews>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9aN-ug-ZV0">
-                                        <rect key="frame" x="0.0" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" red="1" green="0.94128109179999997" blue="0.00037984644719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="C">
@@ -103,21 +103,21 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Dpk-GL-JpX">
-                                        <rect key="frame" x="31" y="0.0" width="30" height="48"/>
-                                        <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                        <rect key="frame" x="41" y="0.0" width="40" height="48"/>
+                                        <color key="backgroundColor" red="1" green="0.94128109179999997" blue="0.00037984644719999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="x²">
+                                        <state key="normal" title="BC">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
-                                            <action selector="performOperation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tsv-db-o5T"/>
+                                            <action selector="backSpace:" destination="BYZ-38-t0r" eventType="touchUpInside" id="jhV-wz-z9x"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" tag="1" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="z1F-8j-RcE">
-                                        <rect key="frame" x="62" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="82" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
-                                        <state key="normal" title="x³">
+                                        <state key="normal" title="x²">
                                             <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
                                         </state>
                                         <connections>
@@ -125,7 +125,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cAC-sh-sng">
-                                        <rect key="frame" x="93" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="123" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="√">
@@ -136,7 +136,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XgL-tJ-yCo">
-                                        <rect key="frame" x="124" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="164" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="π">
@@ -147,7 +147,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i5C-bF-pnM">
-                                        <rect key="frame" x="155" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="205" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="e">
@@ -158,7 +158,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Q70-h4-VxD">
-                                        <rect key="frame" x="186" y="0.0" width="30" height="48"/>
+                                        <rect key="frame" x="246" y="0.0" width="40" height="48"/>
                                         <color key="backgroundColor" red="1" green="0.65039562668140971" blue="0.10499204726469957" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="30"/>
                                         <state key="normal" title="÷">

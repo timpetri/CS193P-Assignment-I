@@ -87,6 +87,18 @@ class ViewController: UIViewController {
         userIsInTheMiddleOfTyping = false
     }
     
+    @IBAction func backSpace(_ sender: UIButton) {
+        
+        // swift will only execute the if body if all assignments are properly completed
+        if userIsInTheMiddleOfTyping, var text = display.text {
+            text.remove(at: text.index(before: text.endIndex))
+            if text.isEmpty {
+                text = "0"
+                userIsInTheMiddleOfTyping = false
+            }
+            display.text = text
+        }
+    }
     
     private func adjustButtonLayout (for view: UIView, isPortrait:Bool) {
         for subview in view.subviews {
