@@ -18,6 +18,9 @@ class ViewController: UIViewController {
     
     private var userIsInTheMiddleOfTyping = false
     
+    @IBOutlet weak var decimalSeparatorButton: UIButton!
+    
+    private let decimalSeparator = NumberFormatter().decimalSeparator!
 
     @IBAction func touchDigit(_ sender: UIButton) {
         
@@ -27,14 +30,14 @@ class ViewController: UIViewController {
             
             let currentlyInDisplay = display.text!
             
-            if "." != digit || !currentlyInDisplay.contains(".") {
+            if decimalSeparator != digit || !currentlyInDisplay.contains(decimalSeparator) {
             display.text = currentlyInDisplay + digit
             }
         } else {
             
             switch digit {
-                case ".":
-                    display.text = "0."
+                case decimalSeparator:
+                    display.text = "0" + decimalSeparator
                 case "0":
                     if "0" == display.text {
                         return
@@ -49,7 +52,8 @@ class ViewController: UIViewController {
     
     var displayValue: Double {
         get {
-            return Double(display.text!)!
+            return (NumberFormatter().number(from: display.text!)?.doubleValue)!
+            //return Double(display.text!)!
         }
         set {
             display.text = String(newValue).beautifyNumbers()
@@ -92,7 +96,7 @@ class ViewController: UIViewController {
         // swift will only execute the if body if all assignments are properly completed
         if userIsInTheMiddleOfTyping, var text = display.text {
             text.remove(at: text.index(before: text.endIndex))
-            if text.isEmpty {
+            if text.isEmpty || "0" == text { // second cond ensures no trailing 0s
                 text = "0"
                 userIsInTheMiddleOfTyping = false
             }
@@ -119,6 +123,8 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         adjustButtonLayout(for: view, isPortrait: traitCollection.horizontalSizeClass == .compact && traitCollection.verticalSizeClass == .regular)
+        
+        decimalSeparatorButton.setTitle(decimalSeparator, for: .normal)
     }
     
     override func willTransition(to newCollection: UITraitCollection, with coordinator: UIViewControllerTransitionCoordinator) {
@@ -142,6 +148,9 @@ extension UIButton {
 }
 
 extension String {
+    
+    static let DecimalDigits = 6
+    
     func replace(pattern: String, with replacement: String) -> String {
         let regex = try! NSRegularExpression(pattern: pattern, options: .caseInsensitive)
         let range = NSMakeRange(0, self.characters.count)
@@ -149,9 +158,27 @@ extension String {
     }
     
     func beautifyNumbers() -> String {
-        // [^0-9]|$ - not followed by other numbers or at the end of string
+        let formatter = NumberFormatter()
+        formatter.numberStyle = .decimal
+        formatter.maximumFractionDigits = String.DecimalDigits
         
-        return self.replace(pattern: "\\.0([^0-9]|$)", with: "$1")
+        var text = self as NSString
+        var numbers = [String]()
+        let regex = try! NSRegularExpression(pattern: "[.0-9]+", options: .caseInsensitive)
+        let matches = regex.matches(in: self, options: [], range: NSMakeRange(0, text.length))
+        numbers = matches.map { text.substring(with:$0.range) }
+        
+        for number in numbers {
+            text = text.replacingOccurrences(
+                of: number,
+                with: formatter.string(from: NSNumber(value: Double(number)!))!
+            ) as NSString
+        }
+        return text as String
+        
+        // - old
+        // [^0-9]|$ - not followed by other numbers or at the end of string
+        //return self.replace(pattern: "\\.0([^0-9]|$)", with: "$1")
     }
 }
 

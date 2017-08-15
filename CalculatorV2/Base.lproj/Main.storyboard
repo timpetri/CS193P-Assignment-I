@@ -507,6 +507,7 @@
                     </view>
                     <connections>
                         <outlet property="Display" destination="C5E-s6-f4O" id="CZH-eR-bIR"/>
+                        <outlet property="decimalSeparatorButton" destination="MrO-pY-8Lc" id="5W7-gd-xwg"/>
                         <outlet property="descriptionDisplay" destination="00Z-g4-f8X" id="ES0-q2-aLh"/>
                     </connections>
                 </viewController>
