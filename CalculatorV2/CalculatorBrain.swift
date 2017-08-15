@@ -25,6 +25,16 @@ struct CalculatorBrain {
         case unaryOperation((Double)->Double, (String) -> String)
         case binaryOperation((Double, Double)->Double, (String, String) -> String)
         case equals
+        
+        // Assignment #2
+        case operand(Double)
+        case variable(String)
+    }
+    
+    private var stack = [Operation]()
+    
+    mutating func setOperand(variable named: String) {
+        stack.append(Operation.variable(named))
     }
     
     private var pendingBinaryOperation: PendingBinaryOperation?
@@ -112,6 +122,9 @@ struct CalculatorBrain {
                 
             case .equals:
                 performPendingBinaryOperation()
+                
+            default:
+                break // nothing to do for operands and variables
                 
             }
         }
