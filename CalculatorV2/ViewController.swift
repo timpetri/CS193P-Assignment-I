@@ -21,6 +21,8 @@ class ViewController: UIViewController {
     @IBOutlet weak var decimalSeparatorButton: UIButton!
     
     private let decimalSeparator = NumberFormatter().decimalSeparator!
+    
+    private var variables = Dictionary<String, Double>()
 
     @IBAction func touchDigit(_ sender: UIButton) {
         
@@ -63,6 +65,19 @@ class ViewController: UIViewController {
     
     private var brain = CalculatorBrain()
     
+    private func displayResult() {
+        let evaluated = brain.evaluate(using: variables)
+        if let result = evaluated.result {
+            displayValue = result
+        }
+        
+        if "" != evaluated.description {
+            descriptionDisplay.text = evaluated.description.beautifyNumbers() + (evaluated.isPending ? "..." : "=")
+        } else {
+            descriptionDisplay.text = " "
+        }
+
+    }
     
     @IBAction func performOperation(_ sender: UIButton) {
         if userIsInTheMiddleOfTyping {
@@ -73,17 +88,19 @@ class ViewController: UIViewController {
             brain.performOperation(mathematicalSymbol)
         }
         
-        let evaluated = brain.evaluate()
-        if let result = evaluated.result {
-            displayValue = result
-        }
-        
-        if "" != evaluated.description {
-            descriptionDisplay.text = evaluated.description.beautifyNumbers() + (evaluated.isPending ? "..." : "=")
-        } else {
-            descriptionDisplay.text = " "
-        }
-        
+        displayResult()
+    }
+    
+    @IBAction func storeToMemory(_ sender: UIButton) {
+        variables["M"] = displayValue
+        userIsInTheMiddleOfTyping = false
+        displayResult()
+    }
+    
+    @IBAction func callMemory(_ sender: UIButton) {
+        brain.setOperand(variable: "M")
+        userIsInTheMiddleOfTyping = false
+        displayResult()
     }
     
     @IBAction func reset(_ sender: UIButton) {
@@ -91,6 +108,7 @@ class ViewController: UIViewController {
         displayValue = 0
         descriptionDisplay.text = " "
         userIsInTheMiddleOfTyping = false
+        variables = Dictionary<String, Double>()
     }
     
     @IBAction func backSpace(_ sender: UIButton) {

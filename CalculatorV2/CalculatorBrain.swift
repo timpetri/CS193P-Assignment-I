@@ -158,9 +158,9 @@ struct CalculatorBrain {
             }
             case .variable(let symbol):
                 if let value = variables?[symbol] {
-                    accumulator = (value, "\(value)")
+                    accumulator = (value, symbol)
                 } else {
-                    accumulator = (0, "0")
+                    accumulator = (0, symbol)
                 }
             }
         }
