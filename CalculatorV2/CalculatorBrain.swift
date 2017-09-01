@@ -187,6 +187,12 @@ struct CalculatorBrain {
         
     }
     
+    mutating func undo() {
+        if !stack.isEmpty {
+            stack.removeLast()
+        }
+    }
+    
     weak var numberFormatter: NumberFormatter?
     
 }

@@ -120,7 +120,7 @@ class ViewController: UIViewController {
         variables = Dictionary<String, Double>()
     }
     
-    @IBAction func backSpace(_ sender: UIButton) {
+    @IBAction func undo(_ sender: UIButton) {
         
         // swift will only execute the if body if all assignments are properly completed
         if userIsInTheMiddleOfTyping, var text = display.text {
@@ -130,6 +130,9 @@ class ViewController: UIViewController {
                 userIsInTheMiddleOfTyping = false
             }
             display.text = text
+        } else {
+            brain.undo()
+            displayResult()
         }
     }
     
