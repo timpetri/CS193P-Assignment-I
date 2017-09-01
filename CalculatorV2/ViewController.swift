@@ -14,6 +14,8 @@ class ViewController: UIViewController {
 
     @IBOutlet weak var descriptionDisplay: UILabel!
     
+    @IBOutlet weak var memoryDisplay: UILabel!
+    
     @IBOutlet var display: UILabel!
     
     private var userIsInTheMiddleOfTyping = false
@@ -22,7 +24,11 @@ class ViewController: UIViewController {
     
     private let decimalSeparator = NumberFormatter().decimalSeparator!
     
-    private var variables = Dictionary<String, Double>()
+    private var variables = Dictionary<String, Double>() {
+        didSet {
+            memoryDisplay.text = variables.flatMap{$0+":\($1)"}.joined(separator: ", ").beautifyNumbers()
+        }
+    }
 
     @IBAction func touchDigit(_ sender: UIButton) {
         
@@ -62,6 +68,8 @@ class ViewController: UIViewController {
         }
         
     }
+    
+
     
     private var brain = CalculatorBrain()
     
@@ -107,6 +115,7 @@ class ViewController: UIViewController {
         brain = CalculatorBrain()
         displayValue = 0
         descriptionDisplay.text = " "
+        memoryDisplay.text = " "
         userIsInTheMiddleOfTyping = false
         variables = Dictionary<String, Double>()
     }
