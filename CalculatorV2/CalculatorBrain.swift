@@ -26,6 +26,11 @@ struct CalculatorBrain {
         
     }
     
+    private enum ErrorOperation {
+        case unaryOperation((Double) -> String?)
+        case binaryOperation((Double, Double) -> String?)
+    }
+    
     private enum Element {
         case operation(String)
         case operand(Double)
@@ -95,11 +100,22 @@ struct CalculatorBrain {
             {Double(arc4random()) / Double(UInt32.max) },
             "rand()"
         )
-        
-        
     ]
     
-    func evaluate(using variables: Dictionary<String,Double>? = nil) -> (result: Double?, isPending: Bool, description: String) {
+    private let errorOperations: Dictionary<String, ErrorOperation> = [
+        "√": ErrorOperation.unaryOperation({ 0.0 > $0 ? "SQRT of negative Number" : nil }),
+        "÷": ErrorOperation.binaryOperation({ 1e-8 >= fabs($0.1) ? "Division by Zero" : nil }),
+        "x⁻¹" : ErrorOperation.unaryOperation({ 1e-8 > fabs($0) ? "Division by Zero" : nil }),
+        "ln" : ErrorOperation.unaryOperation({ 0 > $0 ? "LN of negative Number" : nil }),
+        "log" : ErrorOperation.unaryOperation({ 0 > $0 ? "LOG of negative Number" : nil }),
+        "x!" : ErrorOperation.unaryOperation({ 0 > $0 ? "Factorial of negative Number" : nil })
+    ]
+    
+    
+    
+    func evaluate(using variables: Dictionary<String,Double>? = nil) -> (result: Double?, isPending: Bool, description: String, error: String?) {
+        
+        var error: String?
         
         var accumulator: (Double, String)?
         
@@ -108,6 +124,7 @@ struct CalculatorBrain {
         struct PendingBinaryOperation {
             
             // structs provide initializers
+            let symbol: String
             let function: (Double, Double) -> Double
             let description: (String, String) -> String
             let firstOperand: (Double, String)
@@ -119,6 +136,11 @@ struct CalculatorBrain {
         
         func performPendingBinaryOperation() {
             if pendingBinaryOperation != nil && accumulator != nil {
+                
+                if let errorOperation = errorOperations[pendingBinaryOperation!.symbol],
+                    case .binaryOperation(let errorFunction) = errorOperation {
+                        error = errorFunction(pendingBinaryOperation!.firstOperand.0, accumulator!.0)
+                }
                 accumulator = pendingBinaryOperation!.perform(with: accumulator!)
                 pendingBinaryOperation = nil
             }
@@ -141,12 +163,20 @@ struct CalculatorBrain {
                     
                 case .unaryOperation(let function, let description):
                     if accumulator != nil {
+                        
+                        // if case let x = y { … } is strictly equivalent to writing switch y { case let x: … default: () }
+                        
+                        if let errorOperation = errorOperations[symbol],
+                            case .unaryOperation(let errorFunction) = errorOperation {
+                            
+                            error = errorFunction(accumulator!.0)
+                        }
                         accumulator = (function(accumulator!.0), description(accumulator!.1))
                     }
                 case .binaryOperation(let function, let description):
                     performPendingBinaryOperation()
                     if accumulator != nil {
-                        pendingBinaryOperation = PendingBinaryOperation(function: function, description: description, firstOperand: accumulator!)
+                        pendingBinaryOperation = PendingBinaryOperation(symbol: symbol, function: function, description: description, firstOperand: accumulator!)
                         accumulator = nil
                         
                     }
@@ -165,7 +195,6 @@ struct CalculatorBrain {
             }
         }
         
-        
         var result: Double? {
             if nil != accumulator {
                 return accumulator!.0
@@ -183,7 +212,7 @@ struct CalculatorBrain {
             }
         }
         
-        return (result, pendingBinaryOperation != nil, description ?? "")
+        return (result, pendingBinaryOperation != nil, description ?? "", error)
         
     }
     
